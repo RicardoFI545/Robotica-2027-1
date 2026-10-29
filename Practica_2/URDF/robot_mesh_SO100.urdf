@@ -1,0 +1,137 @@
+<robot name="so100">
+<!--Información de eslabones-->
+<link name="base_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+            <mesh filename="Base.STL"/>
+        </geometry>
+        <material name="negro">
+            <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="shoulder_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="1.57 0.0 0.0"/>
+        <geometry>
+            <mesh filename="Shoulder_Rotation_Pitch.STL"/>
+        </geometry>
+        <material name="rojo">
+            <color rgba="1 0.0 0.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="upper_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57 3.14"/>
+        <geometry>
+            <mesh filename="Upper_Arm.STL"/>
+        </geometry>
+        <material name="verde">
+            <color rgba="0.0 1 0.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="lower_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57 0.0"/>
+        <geometry>
+            <mesh filename="Lower_Arm.STL"/>
+        </geometry>
+        <material name="azul">
+            <color rgba="0.0 0.0 1 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="wrist_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 1.57 0.0"/>
+        <geometry>
+            <mesh filename="Wrist_Pitch_Roll.STL"/>
+        </geometry>
+        <material name="amarillo">
+            <color rgba="1 1 0.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="fixed_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="1.57 3.14 -3.14"/>
+        <geometry>
+            <mesh filename="Fixed_Gripper.STL"/>
+        </geometry>
+        <material name="cyan">
+            <color rgba="0.0 1.0 1.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<link name="jaw_link">
+    <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 3.14 0.0"/>
+        <geometry>
+            <mesh filename="Moving_Jaw.STL"/>
+        </geometry>
+        <material name="magenta">
+            <color rgba="1.0 0.0 1.0 1.0"/>
+        </material>
+    </visual>
+</link>
+
+<!--Información de articulaciones-->
+<joint name="shoulder_joint" type="revolute">
+    <origin xyz="0.0 -0.045 0.016" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="shoulder_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="10.0"/>
+</joint>
+
+<joint name="upper_joint" type="revolute">
+    <origin xyz="0.0 -0.0306 0.1025" rpy="0.0 -1.57 0.0"/>
+    <parent link="shoulder_link"/>
+    <child link="upper_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="0" upper="3.14" effort="1.0" velocity="10.0"/>
+</joint>
+
+<joint name="lower_joint" type="revolute">
+    <origin xyz="-0.02895 -0.11266 0.0" rpy="0.0 0.0 1.57"/>
+    <parent link="upper_link"/>
+    <child link="lower_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="0" upper="3.14" effort="1.0" velocity="10.0"/>
+</joint>
+
+<joint name="wrist_joint" type="revolute">
+    <origin xyz="0.13481 0.005292 0.0" rpy="0.0 0.0 1.57"/>
+    <parent link="lower_link"/>
+    <child link="wrist_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="1.0" velocity="10.0"/>
+</joint>
+
+<joint name="fixed_joint" type="revolute">
+    <origin xyz="-0.0 -0.0601 0.0" rpy="1.57 0.0 0.0"/>
+    <parent link="wrist_link"/>
+    <child link="fixed_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="1.0" velocity="10.0"/>
+</joint>
+
+<joint name="jaw_joint" type="revolute">
+    <origin xyz="-0.02432 -0.02138 0.00065" rpy="-1.57 0.0 0.0"/>
+    <parent link="fixed_link"/>
+    <child link="jaw_link"/>
+    <axis xyz="0.0 0.0 1"/>
+    <limit lower="-1.57" upper="0" effort="1.0" velocity="10.0"/>
+</joint>
+
+</robot>
+
